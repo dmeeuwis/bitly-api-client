@@ -24,13 +24,13 @@ public class BitlyClientException extends RuntimeException {
 
 	private static final long serialVersionUID = 5810677972369016949L;
 
-	/** Construct a new RequestBuilderException */
+	/** Construct a new BitlyClientException */
 	public BitlyClientException() {
 		super();
 	}
 
 	/**
-	 * Construct a new RequestBuilderException
+	 * Construct a new BitlyClientException
 	 * @param message the Message
 	 * @param cause the Cause
 	 */
@@ -39,7 +39,7 @@ public class BitlyClientException extends RuntimeException {
 	}
 
 	/**
-	 * Construct a new RequestBuilderException
+	 * Construct a new BitlyClientException
 	 * @param message the Message
 	 */
 	public BitlyClientException(String message) {
@@ -47,7 +47,7 @@ public class BitlyClientException extends RuntimeException {
 	}
 
 	/**
-	 * Construct a new RequestBuilderException
+	 * Construct a new BitlyClientException
 	 * @param cause the Cause
 	 */
 	public BitlyClientException(Throwable cause) {
