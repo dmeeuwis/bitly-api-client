@@ -58,6 +58,9 @@ public abstract class Request<T> {
 
 	/** contains all query parameters to be added to the request */
 	private List<QueryParameter> queryParameters = new LinkedList<QueryParameter>();
+	
+	/** optional timeout parameters */
+	private Integer connectTimeout, readTimeout;
 
 	/**
 	 * Constructs a new Request
@@ -137,6 +140,24 @@ public abstract class Request<T> {
 	public void addQueryParameter(QueryParameter queryParameter) {
 		queryParameters.add(queryParameter);
 	}
+	
+	/**
+	 * Sets a network timeout on acquiring the connection.
+	 * @param timeoutInMillis The timeout in milliseconds. 0 indicates no timeout.
+	 */
+	public Request<T> setNetworkConnectionTimeout(int timeoutInMillis){
+		this.connectTimeout = Integer.valueOf(timeoutInMillis);
+		return this;
+	}
+	
+	/**
+	 * Sets a network timeout on reading data from the connection.
+	 * @param timeoutInMillis The timeout in milliseconds. 0 indicates no timeout.
+	 */
+	public Request<T> setNetworkReadTimeout(int timeoutInMillis){
+		this.readTimeout = Integer.valueOf(timeoutInMillis);
+		return this;
+	}
 
 	/**
 	 * Build the URL for the call to the API.
@@ -184,6 +205,12 @@ public abstract class Request<T> {
 			String url = buildUrl();
 			LOG.debug("Calling URL: {}", url);
 			URLConnection conn = new URL(url).openConnection();
+			
+			if(connectTimeout != null)
+				conn.setConnectTimeout(connectTimeout);
+			if(readTimeout != null)
+				conn.setReadTimeout(readTimeout);
+			
 			conn.connect();
 
 			StringBuffer respBuf = new StringBuffer();
